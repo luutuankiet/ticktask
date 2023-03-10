@@ -120,5 +120,4 @@ if (( $? != 0 )); then
 
     exit 2
 fi
-# kill -9 $PPID
-echo  $userinput
+kill -9 $PPID
