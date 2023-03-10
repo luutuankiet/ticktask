@@ -12,7 +12,15 @@ fi
 
 task_title=$(echo "$@" | sed 's/\\/\\\\/g; s/"/\\"/g')
 echo "input task description if any: "
-read user_input
+
+# open a vim file to allow multiline; clear the content before input
+echo " " > /tmp/tickticktemp.txt
+vim /tmp/tickticktemp.txt
+user_input_raw=$(cat /tmp/tickticktemp.txt)
+
+# format the input to add \n for each line
+user_input=$(echo $user_input_raw | sed ':a;N;$!ba;s/\n/\\\n/g;s/"/\\"/g' )
+
 if [ -n "$user_input" ]; then # check if body exists then append json format. requires gxmessage util install - sudo apt install gxmessage
      task_body=', "content": "'$user_input'"'
 fi
@@ -112,4 +120,5 @@ if (( $? != 0 )); then
 
     exit 2
 fi
-
+# kill -9 $PPID
+echo  $userinput
